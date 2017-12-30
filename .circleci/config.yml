@@ -1,11 +1,12 @@
 version: 2
 jobs:
-  test:
+  build:
     macos:
       xcode: "8.3.3"
     steps:
       run:
         - npm install -g react-native-cli
         - npm install -g detox-cli
+      run:
         - detox build --configuration ios.sim.release
         - detox test --configuration ios.sim.release --cleanup
