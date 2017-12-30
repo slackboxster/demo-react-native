@@ -1,12 +1,22 @@
 version: 2
 jobs:
-  build:
+  setup:
     macos:
       xcode: "8.3.3"
     steps:
-      run:
-        - npm install -g react-native-cli
-        - npm install -g detox-cli
-      run:
-        - detox build --configuration ios.sim.release
-        - detox test --configuration ios.sim.release --cleanup
+      - run: npm install -g react-native-cli
+      - run: npm install -g detox-cli
+  test:
+    macos:
+      xcode: "8.3.3"
+    requires:
+      setup
+    steps:
+      - run: detox build --configuration ios.sim.release
+      - run: detox test --configuration ios.sim.release --cleanup
+workflows:
+  version: 2
+  detox_tests:
+    jobs:
+      - setup
+      - test
