@@ -1,23 +1,11 @@
-machine:
-
-  timezone:
-    America/New_York
-
-  # Add some environment variables
-  environment:
-    NODE_VERSION=stable
-    
-dependencies:
-  pre:
-    #- curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
-    #- export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-    #- nvm install $NODE_VERSION
-    #- nvm use $NODE_VERSION
-    - npm install -g react-native-cli
-    - npm install -g detox-cli
-  
-## Customize test commands
-test:
-  override:
-    - detox build --configuration ios.sim.release
-    - detox test --configuration ios.sim.release --cleanup
+version: 2
+jobs:
+  test:
+    macos:
+      xcode: "8.3.3"
+    steps:
+      run:
+        - npm install -g react-native-cli
+        - npm install -g detox-cli
+        - detox build --configuration ios.sim.release
+        - detox test --configuration ios.sim.release --cleanup
